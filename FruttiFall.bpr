@@ -1,0 +1,109 @@
+#----------------------------------------------------------------------------
+# Borland C++ Builder 6 Project: FruttiFall
+# Makefile-style BPR with explicit project rules (BCB6 compatible)
+#----------------------------------------------------------------------------
+
+PROJECT    = FruttiFall.exe
+OBJFILES   = FruttiFall.obj MainForm.obj frutti_engine.obj
+RESFILES   =
+IDLFILES   =
+IDLGENFILES=
+DEF_FILE   =
+RESDEPEN   = $(RESFILES)
+LIBFILES   =
+SPARELIBS  = vcl.lib
+PACKAGES   = vcl.bpi vclx.bpi
+PATHCPP    = .;$(BCB)\include;$(BCB)\include\vcl
+PATHPAS    =
+PATHRC     =
+PATHASM    =
+DEBUGLIBPATH = $(BCB)\lib\debug
+RELEASELIBPATH = $(BCB)\lib\release
+LINKER     = ilink32
+USERDEFINES =
+SYSDEFINES = NO_STRICT;_NO_VCL
+WARNINGS   = -w-par
+
+CFLAG1 = -Od -H=$(BCB)\lib\vcl60.csm -Vx -Ve -X- -a8 -b- -k -vi -tWM
+CFLAG2 = -D$(SYSDEFINES);$(USERDEFINES) -I$(PATHCPP) -L$(RELEASELIBPATH)
+PFLAGS = -$Y- -$W+ -$O- -v -JPHNV -M
+RFLAGS = -i$(BCB)\include
+AFLAGS = /mx /w2 /zd
+LFLAGS = -I$(RELEASELIBPATH) -L$(RELEASELIBPATH) -aa -V4.0 -Tpe -x
+
+ALLOBJ = c0w32.obj $(OBJFILES)
+ALLRES = $(RESFILES)
+ALLLIB = $(LIBFILES) $(PACKAGES) $(SPARELIBS) import32.lib cw32.lib
+
+#----------------------------------------------------------------------------
+
+!if !$d(BCB)
+!error BCB environment variable is not set.
+!endif
+
+BCB_BIN = $(BCB)\Bin
+BCC32   = $(BCB_BIN)\bcc32
+ILINK32 = $(BCB_BIN)\ilink32
+BRCC32  = $(BCB_BIN)\brcc32
+TLIB    = $(BCB_BIN)\tlib
+
+.autodepend
+
+!if $d(PATHCPP)
+.path.cpp = $(PATHCPP)
+!endif
+!if $d(PATHASM)
+.path.asm = $(PATHASM)
+!endif
+!if $d(PATHPAS)
+.path.pas = $(PATHPAS)
+!endif
+!if $d(PATHRC)
+.path.rc = $(PATHRC)
+!endif
+
+#----------------------------------------------------------------------------
+# Explicit project build rule to avoid "project rule not found"
+#----------------------------------------------------------------------------
+
+$(PROJECT): $(OBJFILES) $(RESDEPEN)
+	$(ILINK32) @&&|
+$(LFLAGS) +c0w32.obj+$(OBJFILES),
+$@,
+,
+$(ALLLIB),
+,
+$(ALLRES)
+|
+
+#----------------------------------------------------------------------------
+# Compile rules
+#----------------------------------------------------------------------------
+
+.cpp.obj:
+	$(BCC32) $(CFLAG1) $(CFLAG2) -o$@ $<
+
+.pas.hpp:
+	$(BCB_BIN)\dcc32 $(PFLAGS) $<
+
+.rc.res:
+	$(BRCC32) $(RFLAGS) -fo$@ $<
+
+#----------------------------------------------------------------------------
+# Units
+#----------------------------------------------------------------------------
+
+FruttiFall.obj: FruttiFall.cpp
+MainForm.obj: MainForm.cpp MainForm.h frutti_engine.h
+frutti_engine.obj: frutti_engine.cpp frutti_engine.h
+
+#----------------------------------------------------------------------------
+# IDE clean target
+#----------------------------------------------------------------------------
+
+clean:
+	-@erase $(OBJFILES)
+	-@erase *.tds
+	-@erase *.il*
+	-@erase *.map
+	-@erase $(PROJECT)
