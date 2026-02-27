@@ -1,48 +1,47 @@
-<?xml version="1.0" encoding="ISO-8859-1"?>
-<PROJECT>
-  <MACROS>
-    <VERSION value="BCB.06.00"/>
-    <PROJECT value="FruttiFall.exe"/>
-    <OBJFILES value="FruttiFall.obj MainForm.obj frutti_engine.obj"/>
-    <RESFILES value=""/>
-    <IDLFILES value=""/>
-    <IDLGENFILES value=""/>
-    <DEFFILE value=""/>
-    <RESDEPEN value="$(RESFILES)"/>
-    <LIBFILES value=""/>
-    <SPARELIBS value="vcl.lib"/>
-    <PACKAGES value="vcl.bpi vclx.bpi"/>
-    <PATHCPP value=".;$(BCB)\include;$(BCB)\include\vcl"/>
-    <PATHPAS value=""/>
-    <PATHRC value=""/>
-    <PATHASM value=""/>
-    <DEBUGLIBPATH value="$(BCB)\lib\debug"/>
-    <RELEASELIBPATH value="$(BCB)\lib\release"/>
-    <LINKER value="ilink32"/>
-    <USERDEFINES value=""/>
-    <SYSDEFINES value="NO_STRICT;_NO_VCL"/>
-    <MAINSOURCE value="FruttiFall.cpp"/>
-  </MACROS>
+# ---------------------------------------------------------------------------
+# Borland C++ Builder 6 Project File (classic makefile-style .bpr)
+# ---------------------------------------------------------------------------
+PROJECT    = FruttiFall.exe
+OBJFILES   = FruttiFall.obj MainForm.obj frutti_engine.obj
+RESFILES   =
+IDLFILES   =
+IDLGENFILES=
+DEF_FILE   =
+RESDEPEN   = $(RESFILES)
+LIBFILES   =
+LIBRARIES  =
+SPARELIBS  = vcl.lib
+PACKAGES   = vcl.bpi vclx.bpi
+PATHCPP    = .;$(BCB)\include;$(BCB)\include\vcl
+PATHPAS    =
+PATHRC     =
+PATHASM    =
+DEBUGLIBPATH = $(BCB)\lib\debug
+RELEASELIBPATH = $(BCB)\lib\release
+LINKER     = ilink32
+USERDEFINES =
+SYSDEFINES = NO_STRICT;_NO_VCL
+MAINSOURCE = FruttiFall.cpp
 
-  <OPTIONS>
-    <CFLAG1 value="-Od -H=$(BCB)\lib\vcl60.csm -Vx -Ve -X- -a8 -b- -k -vi -tWM"/>
-    <CFLAG2 value="-D$(SYSDEFINES);$(USERDEFINES) -I$(PATHCPP) -L$(RELEASELIBPATH)"/>
-    <PFLAGS value="-$Y- -$W+ -$O- -v -JPHNV -M"/>
-    <RFLAGS value="-i$(BCB)\include"/>
-    <AFLAGS value="/mx /w2 /zd"/>
-    <LFLAGS value="-I$(RELEASELIBPATH) -L$(RELEASELIBPATH) -aa -V4.0 -Tpe -x"/>
-  </OPTIONS>
+WARNINGS = -w-par
 
-  <LINKER>
-    <ALLOBJ value="c0w32.obj $(OBJFILES)"/>
-    <ALLRES value=""/>
-    <ALLLIB value="$(LIBFILES) $(PACKAGES) $(SPARELIBS) import32.lib cw32.lib"/>
-  </LINKER>
+CFLAG1 = -Od -H=$(BCB)\lib\vcl60.csm -Vx -Ve -X- -a8 -b- -k -vi -tWM
+CFLAG2 = -D$(SYSDEFINES);$(USERDEFINES) -I$(PATHCPP) -L$(RELEASELIBPATH)
+PFLAGS = -$Y- -$W+ -$O- -v -JPHNV -M
+RFLAGS = -i$(BCB)\include
+AFLAGS = /mx /w2 /zd
+LFLAGS = -I$(RELEASELIBPATH) -L$(RELEASELIBPATH) -aa -V4.0 -Tpe -x
 
-  <FILELIST>
-    <FILE FILENAME="FruttiFall.cpp" UNITNAME="FruttiFall" CONTAINERID="CCompiler"/>
-    <FILE FILENAME="MainForm.cpp" FORMNAME="FormMain" UNITNAME="MainForm" CONTAINERID="CCompiler" DESIGNCLASS="TForm"/>
-    <FILE FILENAME="MainForm.dfm" FORMNAME="FormMain" UNITNAME="MainForm" CONTAINERID="Form" DESIGNCLASS="TForm"/>
-    <FILE FILENAME="frutti_engine.cpp" UNITNAME="frutti_engine" CONTAINERID="CCompiler"/>
-  </FILELIST>
-</PROJECT>
+ALLOBJ = c0w32.obj $(OBJFILES)
+ALLRES =
+ALLLIB = $(LIBFILES) $(PACKAGES) $(SPARELIBS) import32.lib cw32.lib
+
+# ---------------------------------------------------------------------------
+# Unit aliases used by the IDE
+# ---------------------------------------------------------------------------
+
+!if $d(BCB)
+!include $(BCB)\lib\makefile.mak
+!else
+!message ERROR: BCB environment variable is not set.
+!endif
