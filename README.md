@@ -4,6 +4,7 @@ Diese Version ist gezielt fuer **Borland C++ Builder 6.0 (VCL, ANSI)** geschrieb
 
 ## Was wurde fuer BCB6 angepasst?
 
+- Die `.bpr` enthaelt explizite Build-Regeln (`$(PROJECT): ...`) damit in BCB6 kein Fehler "project rule not found" auftritt.
 - Hinweis: `FruttiFall.bpr` ist absichtlich im klassischen BCB6-Makefile-Format (nicht XML), um den Fehler "xml project section,project, not found" zu vermeiden.
 - Kein Unicode-/Emoji-Rendering mehr (BCB6 ist ANSI-basiert): statt Emojis werden kurze Symbol-Codes gezeichnet (`AP`, `BA`, `GR`, `CA`, `BR`, `CO`).
 - `WinMain`-Entry-Point ohne neuere VCL-Eigenschaften.
